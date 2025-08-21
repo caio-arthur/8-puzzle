@@ -1,0 +1,21 @@
+    Atividade Inteligência Artificial 21/08
+
+1 - Temos pelo menos três opções de escolha: Lista (1D),  Lista de listas ( 2D, matriz), ou uma tupla de tuplas. Pensando na simplicidade, a lista se torna a melhor opção. Motivos: Mais simples de manipular em Python, Fácil de copiar (novo_estado = estado[:]). Fácil de armazenar em estruturas de busca (conversão rápida para tuple se precisar usar em set/dict). Menos verbosidade do que trabalhar com matriz 2D, que exige controlar linha e coluna.
+
+
+
+3 - O objetivo final é a configuração do tabuleiro em que todas as peças estão em ordem crescente. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+2- O espaço em branco pode s

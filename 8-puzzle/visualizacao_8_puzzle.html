@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualização do 8-Puzzle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+        #puzzle-board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+            border: 5px solid #333;
+            background-color: #666;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .tile {
+            width: 100px;
+            height: 100px;
+            background-color: #4a90e2;
+            color: white;
+            font-size: 2.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s ease-in-out;
+        }
+        .empty {
+            background-color: transparent;
+        }
+        #controls {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+        }
+        button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+        #step-info {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Solução do 8-Puzzle com BFS</h1>
+    <div id="puzzle-board"></div>
+    <div id="controls">
+        <button id="prev-btn">Anterior</button>
+        <span id="step-info">Passo: 0 / 0</span>
+        <button id="next-btn">Próximo</button>
+    </div>
+
+    <script>
+        const solutionPath = [[1, 2, 3, 4, 8, 0, 7, 6, 5], [1, 2, 3, 4, 8, 5, 7, 6, 0], [1, 2, 3, 4, 8, 5, 7, 0, 6], [1, 2, 3, 4, 0, 5, 7, 8, 6], [1, 2, 3, 4, 5, 0, 7, 8, 6], [1, 2, 3, 4, 5, 6, 7, 8, 0]];
+        const board = document.getElementById('puzzle-board');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const stepInfo = document.getElementById('step-info');
+
+        let currentStep = 0;
+        const totalSteps = solutionPath.length - 1;
+
+        function drawBoard(state) {
+            board.innerHTML = ''; // Limpa o tabuleiro anterior
+            state.forEach(value => {
+                const tile = document.createElement('div');
+                tile.classList.add('tile');
+                if (value === 0) {
+                    tile.classList.add('empty');
+                } else {
+                    tile.textContent = value;
+                }
+                board.appendChild(tile);
+            });
+        }
+
+        function updateControls() {
+            stepInfo.textContent = `Passo: ${currentStep} / ${totalSteps}`;
+            prevBtn.disabled = currentStep === 0;
+            nextBtn.disabled = currentStep === totalSteps;
+        }
+
+        function showStep(step) {
+            if (step >= 0 && step < solutionPath.length) {
+                currentStep = step;
+                drawBoard(solutionPath[currentStep]);
+                updateControls();
+            }
+        }
+
+        prevBtn.addEventListener('click', () => showStep(currentStep - 1));
+        nextBtn.addEventListener('click', () => showStep(currentStep + 1));
+
+        // Inicia a visualização no primeiro passo
+        showStep(0);
+    </script>
+</body>
+</html>
+    
